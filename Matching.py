@@ -4,7 +4,7 @@
 # matchVolunteer [client's attributes] [[volunteer's atts],...]
 #
 # Preconditions: Volunteer and Client will share the same language
-# and location. Attributes lists must have at least two attributes.                           =
+# and location. Attributes lists must have at least two attributes.
 # There are no duplicate attributes in a list.
 #
 # This algorithm will match volunteers to clients depending on their
