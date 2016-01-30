@@ -1,0 +1,115 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>People4People | Volunteer Sign Up</title>
+    <link rel ="stylesheet" type ="type/css" href="{{ url_for('css', filename='foundation.css') }}" />
+    <link rel ="stylesheet" type ="type/css" href="{{ url_for('css', filename='app.css') }}" />  
+   <!-- <link rel="stylesheet" href="css/foundation.css" /> 
+    <link rel="stylesheet" href="css/app.css" />
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">-->
+  </head>
+ <body>
+ 		<link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+
+		<header class="header">
+			<h1 class="main-header">People4People</h1>
+			<ul class="header-subnav">
+				<li>
+					<a href="creator.html">About us</a>
+				</li>
+				<li>
+					<a href="index.html" class="is-active">Volunteer</a>
+				</li>
+				<li>
+					<a href="info.html">Information</a>
+				</li>
+			</ul>
+		</header>
+<div class = "row">
+	<div class="small-6 large-centered columns">
+<div class = "form">
+<form action="/signup" method="post">
+  <fieldset>
+    <legend>Volunteer Signup</legend>
+    <label for="name">Name:</label> <input type="text" name="name" id="name" /><br>
+    <label for = "phone">Phone: </label><input type="text" name="phone" id = "phone"/><br>
+    <label for ="language">Language:</label><input type="text" name="language" id="language" /><br>
+    <label for = "description">Describe yourself:</label> <textarea rows = "4" cols = "50" name="description" id = "description"></textarea><br>
+    <input type="submit">
+  </fieldset>
+</form>
+</div>
+</div>
+</div> 
+ 	
+<br><br><br>
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="row full-width">
+			<div class="small-12 medium-3 large-4 columns">
+				<i class="fi-laptop"></i>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum maiores alias ea sunt facilis impedit fuga dignissimos illo quaerat iure in nobis id quos, eaque nostrum! Unde, voluptates suscipit repudiandae!
+				</p>
+			</div>
+			<div class="small-12 medium-3 large-4 columns">
+				<i class="fi-html5"></i>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit impedit consequuntur at! Amet sed itaque nostrum, distinctio eveniet odio, id ipsam fuga quam minima cumque nobis veniam voluptates deserunt!
+				</p>
+			</div>
+			<div class="small-6 medium-3 large-2 columns">
+				<h4>Work With Me</h4>
+				<ul class="footer-links">
+					<li>
+						<a href="#">What I Do</a>
+					</li>
+					<li>
+						<a href="#">Pricing</a>
+					</li>
+					<li>
+						<a href="#">Events</a>
+					</li>
+					<li>
+						<a href="#">Blog</a>
+					</li>
+					<li>
+						<a href="#">FAQ's</a>
+					</li>
+					<ul>
+			</div>
+			<div class="small-6 medium-3 large-2 columns">
+				<h4>Follow Me</h4>
+				<ul class="footer-links">
+					<li>
+						<a href="#">GitHub</a>
+					</li>
+					<li>
+						<a href="#">Facebook</a>
+					</li>
+					<li>
+						<a href="#">Twitter</a>
+					</li>
+					<li>
+						<a href="#">Instagram</a>
+					</li>
+					<li>
+						<a href="#">Dribbble</a>
+					</li>
+					<ul>
+			</div>
+		</div>
+	</footer>
+
+ 	
+    <script src="js/vendor/jquery.min.js"></script>
+    <script src="js/vendor/what-input.min.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
+
