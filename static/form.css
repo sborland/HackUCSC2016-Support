@@ -1,0 +1,23 @@
+input[type=text] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    background-color: #3CBC8D;
+    border-color: #3CBC8D;
+}
+
+fieldset {
+	border-color: #7AAFBB;
+}
+
+textarea{
+	background-color: #3CBC8D;
+}
+
+.form{
+	font-family: 'Lobster', cursive;
+	font-size: 25px;
+}
+
+body {
+	background-color: #2E7282;
+}
