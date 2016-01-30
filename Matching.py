@@ -1,16 +1,15 @@
 # ==================================
 # Matching.py
 # 
-# Matching.py [client's Attributes] [[Volunteer's Atts],...]
+# matchVolunteer [client's attributes] [[volunteer's atts],...]
 # 
-# Precondition: Volunteer and client will share the same language and location.
+# Precondition: Volunteer and Client will share the same language and location.
 # Attributes lists must have at least two attributes.
 # There are no duplicate attributes in a list.
 #
 # This algorithm will match volunteers to clients depending on their
 # conditions.
 # ==================================
-
 
 #Test Cases:
 #client = ["c9", "t0", "t3", "t1", "t2"]
@@ -22,7 +21,6 @@
 #             ["v5", "t1", "t2"],
 #             ["v6", "t0", "t2", "t1"]
 #]
-
 
 def matchVolunteer(client, volunteer):
     volunteer_score = [0]*(len(volunteer))
@@ -49,7 +47,6 @@ def matchVolunteer(client, volunteer):
         return False
     else:
         return result[0]
-
 
 #def main():
 #    print matchVolunteer(client, volunteer)
