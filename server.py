@@ -6,7 +6,7 @@ import twilio.twiml
 import sqlite3 as lite
 import sys
 import json
-
+from account_manager.py import *
  #suppress http request log
 import logging
 log = logging.getLogger('werkzeug')
@@ -167,8 +167,8 @@ def signup():
     f.write("tagArray")
     for x in choice_list:
         f.write(x + "\n")
-
     f.close()
+
     return index()
 
 if __name__ == "__main__":
