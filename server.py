@@ -116,9 +116,16 @@ def service():
 
 
 @app.route('/hello/')
-@app.route('/hello/<name>')
-def hello(name='Sarah'):
-    return render_template('basic.html', name=name)
+def hello(name= 'Leslie'):
+    return render_template('signup.html', name=name)
+
+
+@app.route('/signup', methods = ['POST'])
+def signup():
+    print("HERE!")
+    email = request.form['email']
+    print("The email address is '" + email + "'")
+    return hello()
 
 if __name__ == "__main__":
     app.run(debug=True)
