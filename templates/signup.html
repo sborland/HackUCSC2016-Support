@@ -16,10 +16,18 @@
 <form action="/signup" method="post">
   <fieldset>
     <legend>Volunteer Signup</legend>
-    <label for="name">Name:</label> <input type="text" name="name" id="name" /><br>
+    <label for="fname">First Name:</label> <input type="text" name="fname" id="fname" /><br>
+    <label for="lname">Last Name:</label> <input type="text" name="lname" id="lname" /><br>
+    <label for="city">City:</label> <input type="text" name="city" id="city" /><br>
+    <label for="state">State:</label> <input type="text" name="state" id="state" /><br>
+    <label for="email">Email:</label> <input type="text" name="email" id="email" /><br>
     <label for = "phone">Phone: </label><input type="text" name="phone" id = "phone"/><br>
     <label for ="language">Language:</label><input type="text" name="language" id="language" /><br>
     <label for = "description">Describe yourself:</label> <textarea rows = "4" cols = "50" name="description" id = "description"></textarea><br>
+    <input type="checkbox" name="choices" value="shelter" checked> Shelter<br>
+    <input type="checkbox" name="choices" value="food"> Food<br>
+    <input type="checkbox" name="choices" value="law"> Law<br>
+
     <input type="submit">
   </fieldset>
 </form>

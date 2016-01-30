@@ -6,7 +6,7 @@ import twilio.twiml
 import sqlite3 as lite
 import sys
 import json
- 
+
  #suppress http request log
 import logging
 log = logging.getLogger('werkzeug')
@@ -135,25 +135,40 @@ def hello(name= 'Leslie'):
 
 @app.route('/signup', methods = ['POST'])
 def signup():
-    print("HERE!")
+    #print("HERE!")
     phone = request.form['phone']
-    name = request.form['name']
+    fname = request.form['fname']
+    lname = request.form['lname']
+    city = request.form['city']
+    state = request.form['state']
+    email = request.form['email']
+    fname = request.form['fname']
     language = request.form['language']
     description = request.form['description']
-    filename = phone
+    filename = str("./volunteer/" + phone)
     f = open(filename,'a')
-    f.write("phone\n")
-    f.write( phone+ "\n")
-    f.write("name\n")
-    f.write( name+ "\n")
+    f.write("fname\n")
+    f.write( fname+ "\n")
+    f.write("lname\n")
+    f.write( lname+ "\n")
+    f.write("city\n")
+    f.write( city+ "\n")
+    f.write("state\n")
+    f.write( state+ "\n")
     f.write("language\n")
     f.write( language+ "\n")
+    f.write("phone\n")
+    f.write( phone+ "\n")
+    f.write("email\n")
+    f.write( email+ "\n")
     f.write("description\n")
     f.write( description+ "\n")
- 
+    choice_list = request.form.getlist("choices")
+    f.write("tagArray")
+    for x in choice_list:
+        f.write(x + "\n")
 
     f.close()
-    print("The phone address is '" + phone+ "'")
     return index()
 
 if __name__ == "__main__":
