@@ -4,7 +4,8 @@
   background-size: cover;
   padding: 4rem; }
   .header .main-header {
-    color: #666; }
+    color: #FFF;
+    text-shadow: black 0px 0px 7px;}
 
 .header-subnav {
   float: none;
@@ -19,6 +20,7 @@
       padding: 0.9rem 1rem 0.75rem;
       font-size: 0.875rem;
       color: #fff;
+      text-shadow: black 0px 0px 10px;
       text-transform: uppercase;
       display: block;
       font-weight: bold;
