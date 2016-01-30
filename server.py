@@ -5,6 +5,7 @@ from helper import *
 import twilio.twiml
 import sqlite3 as lite
 import sys
+import json
  
  #suppress http request log
 import logging
@@ -23,7 +24,7 @@ ploc = ""
 pservice = []
 
 @app.route("/", methods=['GET', 'POST'])
-def hello_monkey():
+def startup():
     """Respond and greet the caller by name."""
     msg = request.values.get('Body', None)
     msg = msg.lower().split()
@@ -114,8 +115,20 @@ def service():
     return str(resp)    
     
 
+########html displays ####################
+@app.route('/index')
+def index():
+	return render_template('index.html')
 
-@app.route('/hello/')
+@app.route('/creators')
+def creator():
+	return render_template('creator.html')
+
+@app.route('/info')
+def info():
+	return render_template('info.html')
+
+@app.route('/signuppage')
 def hello(name= 'Leslie'):
     return render_template('signup.html', name=name)
 
@@ -141,7 +154,7 @@ def signup():
 
     f.close()
     print("The phone address is '" + phone+ "'")
-    return hello()
+    return index()
 
 if __name__ == "__main__":
     app.run(debug=True)

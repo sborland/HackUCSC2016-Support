@@ -5,8 +5,8 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>People4People | Information</title>
-		<link rel="stylesheet" href="css/foundation.css" />
-		<link rel="stylesheet" href="css/app.css" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='foundation.css') }}">
 	</head>
 	<body>
 
@@ -16,13 +16,13 @@
 			<h1 class="main-header">People4People</h1>
 			<ul class="header-subnav">
 				<li>
-					<a href="creator.html">About us</a>
+					<a href="/creators">About us</a>
 				</li>
 				<li>
-					<a href="index.html">Volunteer</a>
+					<a href="/index" class="is-active">Volunteer</a>
 				</li>
 				<li>
-					<a href="info.html" class="is-active">Information</a>
+					<a href="/info">Information</a>
 				</li>
 			</ul>
 		</header>
