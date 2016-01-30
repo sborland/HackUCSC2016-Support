@@ -20,8 +20,23 @@ class volunteer(object):
     status = None
     tagArray = [None]*101
 
+# Structure for the clients object.
+class client(object):
+    def __init__(self, title):
+        self.title = title
+    fName = None
+    lName = None
+    city = None
+    state = None
+    language = None
+    phone = None
+    volunteerID = None
+    description = None
+    status = None
+    tagArray = [None]*101
+
 # Each of the cases for lines.
-def fileCases(arg, file, Obj, cur):
+def fileVolunteerCases(arg, file, Obj, cur):
     if arg == "fName":
         Obj.fName = file.readline().rstrip()
     elif arg == "lName":
@@ -39,7 +54,7 @@ def fileCases(arg, file, Obj, cur):
     elif arg == "description":
         Obj.description = file.readline().rstrip("\n")
     elif arg == "status":
-        Obj.status = file.readline().rstrip()
+        Obj.status = 0
     elif arg == "tagArray":
         i = -1
         while (arg != "EXIT"):
@@ -74,8 +89,22 @@ def deleteTagDup(Obj):
     [noDupes.append(i) for i in Obj if not noDupes.count(i)]
     return noDupes
 
+def insertVolunteer(file):
+    con = lite.connect('service_database.db')
+    cur = con.cursor()
+    con.text_factory = str
+    f = open(file)
+    while True:
+        nextLine = f.readline().rstrip()
+        check = fileVolunteerCases(nextLine, f, volunteerObj, cur)
+        if check == "break":
+            break
+    con.commit()
+    f.close()
+    con.close()
+
 # Command line arguments
-script, filename = argv
+script, filename,  = argv
 
 # Initialization of volunteer object.
 volunteerObj = volunteer(["title"])
@@ -85,28 +114,23 @@ con = None
 file = None
 
 try:
-    # Reading in the database file.
+    # Reading in the database files.
     con = lite.connect('service_database.db')
     cur = con.cursor()
     con.text_factory = str
-    file = open(filename)
 
     cur.execute("DROP TABLE IF EXISTS volunteers")
-    # Creating the table with the elements
-    cur.execute("CREATE TABLE  volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status TEXT, Tags TEXT)")
-
+    cur.execute("DROP TABLE IF EXISTS users")
+    # Creating both volunteer and user tables with the elements
+    cur.execute("CREATE TABLE volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    cur.execute("CREATE TABLE users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
     # Read the file and deal with each of the cases
     # If we hit the end of the file, then break.
 
-    while True:
-        nextLine = file.readline().rstrip()
-        check = fileCases(nextLine, file, volunteerObj, cur)
-        if check == "break":
-            break
 
 
-    #testing
-    con.commit()
+    # testing
+    # con.commit()
     cur.execute("SELECT * FROM volunteers")
     print cur.fetchall()
 
@@ -121,4 +145,3 @@ except lite.Error, e:
 finally:
     if con:
         con.close()
-        file.close()
