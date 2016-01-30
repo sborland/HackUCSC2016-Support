@@ -3,53 +3,55 @@
 # 
 # Matching.py [client's Attributes] [[Volunteer's Atts],...]
 # 
-# Lists must have at least three attributes 
+# Precondition: Volunteer and client will share the same language and location.
+# Attributes lists must have at least two attributes.
+# There are no duplicate attributes in a list.
 #
-# This algorithm will match volunteers
-# to clients depending on their
+# This algorithm will match volunteers to clients depending on their
 # conditions.
 # ==================================
 
-# Precondition: Volunteer and client will share the same language and location.
 
-# 1 client that chooses from list of volunteers
-# If there is no available volunteer, then it goes to the next
-# volunteer with the least amount of clients.
-
-#Initialize the people
-
-client = ["c9", "Food", "Shelter", "Law"]
-
-volunteer = [["v0", "Food"],
-             ["v1", "Law"],
-             ["v2", "Food", "Shelter"],
-             ["v3", "Shelter"],
-             ["v4", "Shelter", "Law"],
-             ["v5", "Food", "Law"],
-             ["v6", "Shelter", "Law", "Food"]
-]
+#Test Cases:
+#client = ["c9", "t0", "t3", "t1", "t2"]
+#volunteer = [["v0", "t1", "t5"],
+#             ["v1", "t9", "t2", "t3"],
+#             ["v2", "t1", "t0", "t2"],
+#             ["v3", "t0"],
+#             ["v4", "t4", "t0", "t2"],
+#             ["v5", "t1", "t2"],
+#             ["v6", "t0", "t2", "t1"]
+#]
 
 
-#def matchVolunteer(client, volunteer):
-volunteer_score = [0]*(len(volunteer))
-index = 0
-search_index = 1
-while search_index < (len(client)):
-    for i in volunteer: # check individual volunteers
-        for j in i: # check each individual trait
-            if client[search_index] == j:
-                volunteer_score[index] += 1
-        index += 1
+def matchVolunteer(client, volunteer):
+    volunteer_score = [0]*(len(volunteer))
     index = 0
-    search_index += 1
+    search_index = 1
+    while search_index < (len(client)):
+        for i in volunteer: # check individual volunteers
+            for j in i: # check each individual trait
+                if client[search_index] == j:
+                    volunteer_score[index] += 1
+            index += 1
+        index = 0
+        search_index += 1
 
-highest_score = 0
-for i in volunteer_score:
-    if i > highest_score:
-        highest_score = i
+    highest_score = 0
+    for i in volunteer_score:
+        if i > highest_score:
+            highest_score = i
 
  
-result = volunteer[volunteer_score.index(highest_score)]
+    result = volunteer[volunteer_score.index(highest_score)]
 
-print result[0]
+    if highest_score == 0:
+        return False
+    else:
+        return result[0]
+
+
+#def main():
+#    print matchVolunteer(client, volunteer)
     
+#main()
