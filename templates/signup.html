@@ -5,13 +5,18 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>People4People | Volunteer Sign Up</title>
-    <link rel="stylesheet" href="css/foundation.css" />
-    <link rel="stylesheet" href="css/app.css" />
+    <!-- <link rel="stylesheet" href="css/foundation.css" /> 
+    <link rel="stylesheet" href="css/app.css" /> -->
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
  <body>
+
+ 
 <form action="/signup" method="post">
-  Name: <input type="text" name="name"><br>
-E-mail: <input type="text" name="email"><br>
+  <label for="password">Name:</label> <input type="text" name="name"><br>
+  <label for = "phone">Phone: </label><input type="text" name="phone"><br>
+  <label for ="language">Language:</label><input type="text" name="language"><br>
+<label for = "description">Describe yourself:</label> <textarea rows = "4" cols = "50" name="description"></textarea><br>
 <input type="submit">
 </form>
  

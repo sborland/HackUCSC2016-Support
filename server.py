@@ -123,8 +123,24 @@ def hello(name= 'Leslie'):
 @app.route('/signup', methods = ['POST'])
 def signup():
     print("HERE!")
-    email = request.form['email']
-    print("The email address is '" + email + "'")
+    phone = request.form['phone']
+    name = request.form['name']
+    language = request.form['language']
+    description = request.form['description']
+    filename = phone
+    f = open(filename,'a')
+    f.write("phone\n")
+    f.write( phone+ "\n")
+    f.write("name\n")
+    f.write( name+ "\n")
+    f.write("language\n")
+    f.write( language+ "\n")
+    f.write("description\n")
+    f.write( description+ "\n")
+ 
+
+    f.close()
+    print("The phone address is '" + phone+ "'")
     return hello()
 
 if __name__ == "__main__":
