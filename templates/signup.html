@@ -7,17 +7,20 @@
     <title>People4People | Volunteer Sign Up</title>
     <!-- <link rel="stylesheet" href="css/foundation.css" /> 
     <link rel="stylesheet" href="css/app.css" /> -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">
   </head>
  <body>
 
- 
+
 <form action="/signup" method="post">
-  <label for="password">Name:</label> <input type="text" name="name"><br>
-  <label for = "phone">Phone: </label><input type="text" name="phone"><br>
-  <label for ="language">Language:</label><input type="text" name="language"><br>
-<label for = "description">Describe yourself:</label> <textarea rows = "4" cols = "50" name="description"></textarea><br>
-<input type="submit">
+  <fieldset>
+    <legend>Volunteer Signup</legend>
+    <label for="name">Name:</label> <input type="text" name="name" id="name" /><br>
+    <label for = "phone">Phone: </label><input type="text" name="phone" id = "phone"/><br>
+    <label for ="language">Language:</label><input type="text" name="language" id="language" /><br>
+    <label for = "description">Describe yourself:</label> <textarea rows = "4" cols = "50" name="description" id = "description"></textarea><br>
+    <input type="submit">
+  </fieldset>
 </form>
  
  	
