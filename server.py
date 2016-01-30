@@ -6,7 +6,7 @@ import twilio.twiml
 import sqlite3 as lite
 import sys
 import json
-from account_manager.py import *
+from account_manager import *
  #suppress http request log
 import logging
 log = logging.getLogger('werkzeug')
@@ -147,9 +147,9 @@ def signup():
     description = request.form['description']
     filename = str("./volunteer/" + phone)
     f = open(filename,'a')
-    f.write("fname\n")
+    f.write("fName\n")
     f.write( fname+ "\n")
-    f.write("lname\n")
+    f.write("lName\n")
     f.write( lname+ "\n")
     f.write("city\n")
     f.write( city+ "\n")
@@ -163,11 +163,15 @@ def signup():
     f.write( email+ "\n")
     f.write("description\n")
     f.write( description+ "\n")
+    f.write("status\n")
+    f.write("0\n")
     choice_list = request.form.getlist("choices")
-    f.write("tagArray")
+    f.write("tagArray\n")
     for x in choice_list:
         f.write(x + "\n")
+    f.write("EXIT")    
     f.close()
+    insertVolunteer(filename)
 
     return index()
 

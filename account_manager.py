@@ -90,9 +90,17 @@ def deleteTagDup(Obj):
     return noDupes
 
 def insertVolunteer(file):
+    
     con = lite.connect('service_database.db')
     cur = con.cursor()
     con.text_factory = str
+    
+    cur.execute("DROP TABLE IF EXISTS volunteers")
+    cur.execute("DROP TABLE IF EXISTS users")
+    # Creating both volunteer and user tables with the elements
+    cur.execute("CREATE TABLE volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    cur.execute("CREATE TABLE users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    
     f = open(file)
     while True:
         nextLine = f.readline().rstrip()
@@ -100,11 +108,14 @@ def insertVolunteer(file):
         if check == "break":
             break
     con.commit()
+    print "finished adding info"
+    cur.execute("SELECT * FROM volunteers")
+    print cur.fetchall()
     f.close()
     con.close()
 
 # Command line arguments
-script, filename,  = argv
+#script, filename,  = argv
 
 # Initialization of volunteer object.
 volunteerObj = volunteer(["title"])
@@ -119,11 +130,11 @@ try:
     cur = con.cursor()
     con.text_factory = str
 
-    cur.execute("DROP TABLE IF EXISTS volunteers")
-    cur.execute("DROP TABLE IF EXISTS users")
+    #cur.execute("DROP TABLE IF EXISTS volunteers")
+    #cur.execute("DROP TABLE IF EXISTS users")
     # Creating both volunteer and user tables with the elements
-    cur.execute("CREATE TABLE volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
-    cur.execute("CREATE TABLE users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    #cur.execute("CREATE TABLE volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    #cur.execute("CREATE TABLE users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
     # Read the file and deal with each of the cases
     # If we hit the end of the file, then break.
 
