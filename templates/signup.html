@@ -7,11 +7,12 @@
     <title>People4People | Volunteer Sign Up</title>
     <!-- <link rel="stylesheet" href="css/foundation.css" /> 
     <link rel="stylesheet" href="css/app.css" /> -->
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">
   </head>
  <body>
 
-
+<div class = "form">
 <form action="/signup" method="post">
   <fieldset>
     <legend>Volunteer Signup</legend>
@@ -22,6 +23,7 @@
     <input type="submit">
   </fieldset>
 </form>
+</div>
  
  	
     <script src="js/vendor/jquery.min.js"></script>
