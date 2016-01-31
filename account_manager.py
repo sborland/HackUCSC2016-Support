@@ -184,24 +184,15 @@ clientObj = client(["title"])
 con = None
 file = None
 
-try:
-    # Reading in the database files.
+def clientVolunteerMatch(clientPhone):
     con = lite.connect('service_database.db')
     cur = con.cursor()
     con.text_factory = str
-
-    #insertClient(filename1)
-    #insertVolunteer(filename2)
-
-    # print matchVolunteer(str(cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")),
-    #                      str(cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")),
-    #                      str(cur.execute("SELECT FirstName FROM volunteers WHERE FirstName='volunteer'")),
-    #                      str(cur.execute("SELECT Tags FROM volunteers WHERE FirstName='volunteer'")))
-    cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")
+    cur.execute("SELECT FirstName FROM clients WHERE Phone="+clientPhone)
     test1 = ''.join(cur.fetchone())
-    cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")
+    cur.execute("SELECT Tags FROM clients WHERE Phone="+clientPhone)
     test2 = list(cur.fetchone())[0]
-    cur.execute("SELECT FirstName FROM volunteers")
+    cur.execute("SELECT Phone FROM volunteers")
     test3 = list(cur.fetchall())
     cur.execute("SELECT Tags FROM volunteers")
     test4 = cur.fetchall()
@@ -209,6 +200,48 @@ try:
     for i in test4:
         tmp = list(i)
         test5.append(tmp[0])
+    volunteerPhone = list(matchVolunteer(test1, test2, test3, test5))[0]
+    cur.execute("UPDATE clients SET VolunteerID =" + volunteerPhone + " WHERE Phone=" + clientPhone)
+    cur.execute("SELECT VolunteerID FROM clients WHERE Phone="+clientPhone)
+    volunteerID = ''.join(cur.fetchone())
+    cur.execute("SELECT FirstName FROM clients WHERE Phone="+clientPhone)
+    firstName = ''.join(cur.fetchone())
+    cur.execute("SELECT Phone FROM clients WHERE Phone="+clientPhone)
+    phone = ''.join(cur.fetchone())
+    cur.execute("SELECT City FROM clients WHERE Phone="+clientPhone)
+    city = ''.join(cur.fetchone())
+    cur.execute("SELECT State FROM clients WHERE Phone="+clientPhone)
+    state = ''.join(cur.fetchone())
+    cur.execute("SELECT Description FROM clients WHERE Phone="+clientPhone)
+    desc = ''.join(cur.fetchone())
+    clientInfo = [volunteerID, firstName, phone, city, state, desc]
+    return clientInfo
+    # client volunteerID, firstname, phone, city, state, desc
+
+try:
+    # Reading in the database files.
+    con = lite.connect('service_database.db')
+    cur = con.cursor()
+    con.text_factory = str
+    cur.execute("CREATE TABLE IF NOT EXISTS volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, Phone TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS clients(Phone TEXT, VolunteerID TEXT, Language TEXT, FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Description TEXT, Tags TEXT, Status INTEGER)")
+    # print matchVolunteer(str(cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")),
+    #                      str(cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")),
+    #                      str(cur.execute("SELECT FirstName FROM volunteers WHERE FirstName='volunteer'")),
+    #                      str(cur.execute("SELECT Tags FROM volunteers WHERE FirstName='volunteer'")))
+
+    # cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")
+    # test1 = ''.join(cur.fetchone())
+    # cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")
+    # test2 = list(cur.fetchone())[0]
+    # cur.execute("SELECT FirstName FROM volunteers")
+    # test3 = list(cur.fetchall())
+    # cur.execute("SELECT Tags FROM volunteers")
+    # test4 = cur.fetchall()
+    # test5 = []
+    # for i in test4:
+    #     tmp = list(i)
+    #     test5.append(tmp[0])
    # print list(matchVolunteer(test1, test2, test3, test5))[0]
 
     # testing

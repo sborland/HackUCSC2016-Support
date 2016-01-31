@@ -99,7 +99,7 @@ def hello_monkey():
                 f.write("null\n")
                 f.close()
                 f_name = True
-                return fname()
+                return fname()    
             return menu()
         elif parsed == "english" or parsed == "spanish":
             f = open(filename,'a')
@@ -136,6 +136,19 @@ def hello_monkey():
         f.write("EXIT")
         f.close()    
         insertClient(filename)
+
+        match = clientVolunteerMatch(user_number)
+        for i in match:
+        	print i
+        message = client.messages.create(
+	    	body= "You will be supporting: " + match[1] + "\n"
+	    	"Phone: " + match[2] + "\n" +
+	    	"City: " + match[3] + "\n" +
+	    	"State: " + match[4] + "\n",
+	    	to= match[0],
+			from_= "16507298318",
+		)
+
         return finished()
     else:
     
@@ -276,7 +289,7 @@ def signup():
     f.write("EXIT")    
     f.close()
     insertVolunteer(filename)
-    os.remove(filename)
+    #os.remove(filename)
     return index()
 
 if __name__ == "__main__":
