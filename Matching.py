@@ -39,7 +39,10 @@ def matchVolunteer(c_name, c_tags, v_name, v_tags):
     # each volunteer is with the client. The higher the score, the
     # more compatible.
 
-    if v_name is None:
+    if len(v_name) == 0:
+        return False
+        
+    if len(v_tags) == 0:
         return False
 
     volunteer_score = [0.0] * (len(v_name))
