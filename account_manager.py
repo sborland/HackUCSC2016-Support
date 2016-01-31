@@ -217,19 +217,6 @@ def clientVolunteerMatch(clientPhone):
     clientInfo = [volunteerID, firstName, phone, city, state, desc]
     return clientInfo
     # client volunteerID, firstname, phone, city, state, desc
-    
-def getItem(phone,category,person):
-#phone - phone number
-#category - city, state, desc etc
-#person - either client or volunteer
-#FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, Phone TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)
-    con = lite.connect('service_database.db')
-    cur = con.cursor()
-    con.text_factory = str
-    cur.execute("SELECT " + category + " FROM "+person+ " WHERE Phone="+phone)
-    string = ''.join(cur.fetchone())
-    return string;
-    
 
 try:
     # Reading in the database files.
@@ -259,10 +246,8 @@ try:
 
     # testing
     # con.commit()
-    #cur.execute("SELECT * FROM clients")
-    #print cur.fetchall()
-    
-    #print getItem("18316005752","FirstName","clients")
+    # cur.execute("SELECT * FROM volunteers")
+    # print cur.fetchall()
 
 # Error handling: prints out error location
 except lite.Error, e:
