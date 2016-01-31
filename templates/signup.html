@@ -1,19 +1,39 @@
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>People4People | Volunteer Sign Up</title>
-    <!-- <link rel="stylesheet" href="css/foundation.css" /> 
-    <link rel="stylesheet" href="css/app.css" /> -->
-    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">
-  </head>
- <body>
+ <head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>sUppoRt | Supporter Sign Up</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='foundation.css') }}">
+
+
+	</head>
+	<body>
+
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+
+		<header class="header">
+			<h1 class="main-header">People4People</h1>
+			<ul class="header-subnav">
+				<li>
+					<a href="/creators">About us</a>
+				</li>
+				<li>
+					<a href="/index" class="is-active">Volunteer</a>
+				</li>
+				<li>
+					<a href="/info">Information</a>
+				</li>
+			</ul>
+		</header>
+		<br />
 
 <div class = "form">
 <form action="/signup" method="post">
+<div class ="row">
+<div class="small-6 large-centered columns">
   <fieldset>
     <legend>Volunteer Signup</legend>
     <label for="fname">First Name:</label> <input type="text" name="fname" id="fname" /><br>
@@ -32,7 +52,19 @@
   </fieldset>
 </form>
 </div>
- 
+</div>
+</div>
+ <br><br><br>
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="row full-width">
+			<i class="fi-mobile"></i>
+			<p>
+				If you need help call this number: 123-456-7890
+			</p>
+		</div>
+	</footer>
+
  	
     <script src="js/vendor/jquery.min.js"></script>
     <script src="js/vendor/what-input.min.js"></script>

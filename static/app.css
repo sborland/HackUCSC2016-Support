@@ -1,7 +1,9 @@
 .header {
   text-align: center;
-  background: url("Banner.jpg") no-repeat center center;
+  background-image: url("Banner.png");
+  background-repeat: repeat-x;
   background-size: cover;
+  margin-bottom: 0px;
   padding: 4rem; }
   .header .main-header {
     color: #FFF;
@@ -67,7 +69,7 @@
   .service .service-icon-box > img.service-icon {
     width: 40px; }
   .service:hover {
-    border-color: #00a8ff; }
+    border-color: #ff0000; }
   .service:hover .service-icon-box {
     top: -30px; }
   .service:hover .service-heading {
@@ -96,6 +98,7 @@
       color: #fff;
       display: table-cell;
       text-align: center;
+      text-shadow: white 0px 0px 5px;
       vertical-align: middle; }
   @media only screen and (max-width: 40em) {
     .features .columns {
@@ -133,45 +136,6 @@
         float: none;
         display: inline-block; }
 
-      .profile-card .profile-info .inline-list i.fi-social-facebook {
-        font-size: 1.5rem;
-        color: #3b5998; }
-
-        .profile-card .profile-info .inline-list i.fi-social-facebook:hover {
-          transform: scale(1.5);
-          transition: all .5s ease-in-out; }
-
-      .profile-card .profile-info .inline-list i.fi-social-twitter {
-        font-size: 1.5rem;
-        color: #55acee; }
-
-        .profile-card .profile-info .inline-list i.fi-social-twitter:hover {
-          transform: scale(1.5);
-          transition: all .5s ease-in-out; }
-
-      .profile-card .profile-info .inline-list i.fi-social-linkedin {
-        font-size: 1.5rem;
-        color: #0077b5; }
-
-        .profile-card .profile-info .inline-list i.fi-social-linkedin:hover {
-          transform: scale(1.5);
-          transition: all .5s ease-in-out; }
-
-      .profile-card .profile-info .inline-list i.fi-social-github {
-        font-size: 1.5rem;
-        color: #333; }
-
-        .profile-card .profile-info .inline-list i.fi-social-github:hover {
-          transform: scale(1.5);
-          transition: all .5s ease-in-out; }
-
-      .profile-card .profile-info .inline-list i.fi-social-youtube {
-        font-size: 1.5rem;
-        color: #cc181e; }
-
-        .profile-card .profile-info .inline-list i.fi-social-youtube:hover {
-          transform: scale(1.5);
-          transition: all .5s ease-in-out; }
 
 
 .full-width {
@@ -186,7 +150,8 @@
 }
 
 .footer i {
-  font-size: 100px;
+  font-size: 80px;
+  text-shadow: white 0px 0px 7px;
 }
 
 .footer h4 {
@@ -200,14 +165,14 @@
 
 .footer p, .footer a {
   font-weight: 300;
-  font-size: .8em;
+  font-size: 2.5em;
   color: #fff;
 }
 
 @media only screen and (min-width: 40.063em) {
-  .footer .columns:nth-child(n+2) {
+  .footer{
     border-left: 1px solid #b3b3b3;
-    min-height: 280px;
+    min-height: 180px;
   }
 }
 .footer-links {
