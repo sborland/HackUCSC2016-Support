@@ -214,8 +214,11 @@ def clientVolunteerMatch(clientPhone):
     state = ''.join(cur.fetchone())
     cur.execute("SELECT Description FROM clients WHERE Phone="+clientPhone)
     desc = ''.join(cur.fetchone())
-    clientInfo = [volunteerID, firstName, phone, city, state, desc]
-    return clientInfo
+    if volunteerID == None or firstName == None or  phone == None or city == None or state == None or desc == None:
+        return []
+    else:
+        clientInfo = [volunteerID, firstName, phone, city, state, desc]
+        return clientInfo
     # client volunteerID, firstname, phone, city, state, desc
     # returns phoneNum
     
