@@ -114,7 +114,7 @@ def hello_monkey():
            lentry = True
            return location()
         elif parsed == "getinfo":
-            return info()
+            return about()
         else:
             return
     elif parsed.isdigit() == True:
@@ -144,7 +144,8 @@ def hello_monkey():
 	    	body= "You will be supporting: " + match[1] + "\n"
 	    	"Phone: " + match[2] + "\n" +
 	    	"City: " + match[3] + "\n" +
-	    	"State: " + match[4] + "\n",
+	    	"State: " + match[4] + "\n" +
+	    	"Description: " + match[5] + "\n",
 	    	to= match[0],
 			from_= "16507298318",
 		)
