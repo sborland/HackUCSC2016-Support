@@ -1,0 +1,21 @@
+fName
+client
+lName
+uLastname
+city
+volcity
+state
+CA
+language
+English
+phone
+831-313-1313
+email
+user@jahoo.com
+description
+I am a test user
+tagArray
+Law
+Food
+Shelter
+EXIT

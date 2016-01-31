@@ -1,6 +1,7 @@
 import sqlite3 as lite
 import sys
 import json
+from Matching import *
 from array import array
 from sys import argv
 
@@ -17,8 +18,8 @@ class volunteer(object):
     phone = None
     email = None
     description = None
-    status = None
-    tagArray = [None]*101
+    status = 0
+    tagArray = []
 
 # Structure for the client object.
 class client(object):
@@ -32,8 +33,8 @@ class client(object):
     city = None
     state = None
     description = None
-    tagArray = [None]*101
-    status = None
+    tagArray = []
+    status = 0
 
 # Each of the cases for the respective groups.
 def fileVolunteerCases(arg, file, Obj, cur):
@@ -56,18 +57,24 @@ def fileVolunteerCases(arg, file, Obj, cur):
     elif arg == "status":
         Obj.status = 0
     elif arg == "tagArray":
-        i = -1
+        # i = 0
         while (arg != "EXIT"):
             arg = file.readline().rstrip()
-            i=i+1
-            Obj.tagArray[i] = arg
+            # print i
+            Obj.tagArray.append(arg)
+            # print arg
+            # i=i+1
         deleteTagDup(Obj.tagArray)
         Obj.tagArray = filter(None, Obj.tagArray)
         Obj.tagArray.remove("EXIT")
+        # print Obj.tagArray
         json_object = json.dumps(Obj.tagArray)
         arrayHelp = [(Obj.fName),(Obj.lName),(Obj.city),(Obj.state),(Obj.language),(Obj.phone), (Obj.email), (Obj.description),(Obj.status), json_object]
-        cur.executemany("INSERT INTO volunteers VALUES(?,?,?,?,?,?,?,?,?,?)",[arrayHelp])
-        resetObj(Obj)
+        cur.execute("SELECT phone FROM volunteers WHERE phone=?",(Obj.phone,))
+        exists = cur.fetchone()
+        if exists == None:
+            cur.executemany("INSERT INTO volunteers VALUES(?,?,?,?,?,?,?,?,?,?)",[arrayHelp])
+        Obj.tagArray = []
     elif arg == "":
         return "break"
     else:
@@ -93,17 +100,24 @@ def fileClientCases(arg, file, Obj, cur):
     elif arg == "status":
         Obj.status = 0
     elif arg == "tagArray":
-        i = -1
+        # i = 0
         while (arg != "EXIT"):
             arg = file.readline().rstrip()
-            i=i+1
-            Obj.tagArray[i] = arg
+            # print i
+            Obj.tagArray.append(arg)
+            # print arg
+            # i=i+1
         deleteTagDup(Obj.tagArray)
         Obj.tagArray = filter(None, Obj.tagArray)
         Obj.tagArray.remove("EXIT")
+        # print Obj.tagArray
         json_object = json.dumps(Obj.tagArray)
         arrayHelp = [(Obj.phone),(Obj.volunteerID),(Obj.language),(Obj.fName),(Obj.lName),(Obj.city),(Obj.state),(Obj.description),json_object,(Obj.status)]
-        cur.executemany("INSERT INTO clients VALUES(?,?,?,?,?,?,?,?,?,?)",[arrayHelp])
+        cur.execute("SELECT z.Phone FROM clients z WHERE z.Phone=?",(Obj.phone,))
+        exists = cur.fetchone()
+        if exists == None:
+            cur.executemany("INSERT INTO clients VALUES(?,?,?,?,?,?,?,?,?,?)",[arrayHelp])
+        Obj.tagArray = []
     elif arg == "":
         return "break"
     else:
@@ -122,7 +136,7 @@ def insertVolunteer(file):
     con.text_factory = str
     
     # Creating both volunteer tables with the elements
-    cur.execute("CREATE TABLE IF NOT EXISTS volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, Phone TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
 
     
     f = open(file)
@@ -133,11 +147,10 @@ def insertVolunteer(file):
         if check == "break":
             break
     con.commit()
-    print "finished adding info"
-    cur.execute("SELECT * FROM volunteers")
-    print cur.fetchall()
-    f.close()
-    con.close()
+    # cur.execute("SELECT * FROM volunteers")
+    # print cur.fetchall()
+    # f.close()
+    # con.close()
 
 def insertClient(file):
     con = lite.connect('service_database.db')
@@ -155,14 +168,13 @@ def insertClient(file):
         if check == "break":
             break
     con.commit()
-    print "finished adding info"
-    cur.execute("SELECT * FROM clients")
-    print cur.fetchall()
+    # cur.execute("SELECT * FROM clients")
+    # print cur.fetchall()
     f.close()
     con.close()
 
 # Command line arguments
-#script, filename,  = argv
+script, filename1, filename2  = argv
 
 # Initialization of volunteer object.
 volunteerObj = volunteer(["title"])
@@ -178,15 +190,26 @@ try:
     cur = con.cursor()
     con.text_factory = str
 
-    #cur.execute("DROP TABLE IF EXISTS volunteers")
-    #cur.execute("DROP TABLE IF EXISTS users")
-    # Creating both volunteer and user tables with the elements
-    #cur.execute("CREATE TABLE volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
-    #cur.execute("CREATE TABLE users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
-    # Read the file and deal with each of the cases
-    # If we hit the end of the file, then break.
+    insertClient(filename1)
+    insertVolunteer(filename2)
 
-
+    # print matchVolunteer(str(cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")),
+    #                      str(cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")),
+    #                      str(cur.execute("SELECT FirstName FROM volunteers WHERE FirstName='volunteer'")),
+    #                      str(cur.execute("SELECT Tags FROM volunteers WHERE FirstName='volunteer'")))
+    cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")
+    test1 = ''.join(cur.fetchone())
+    cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")
+    test2 = list(cur.fetchone())[0]
+    cur.execute("SELECT FirstName FROM volunteers")
+    test3 = list(cur.fetchall())
+    cur.execute("SELECT Tags FROM volunteers")
+    test4 = cur.fetchall()
+    test5 = []
+    for i in test4:
+        tmp = list(i)
+        test5.append(tmp[0])
+    print list(matchVolunteer(test1, test2, test3, test5))[0]
 
     # testing
     # con.commit()
