@@ -127,9 +127,9 @@ def hello_monkey():
                 next= f.readline()
             langg = f.readline()
             if (langg== "spanish\n"):
-                choice = "Buscar soportador \nmas informacion \nUnsubscribe"
+                choice = "Buscar soportador \nmas informacion \nComplete \nUnsubscribe"
             else:
-                choice = "Find volunteer \nGet info \nUnsubscribe"
+                choice = "Find volunteer \nGet  \nComplete \nUnsubscribe"
             f.close()
             return menu(choice)
         #    
@@ -139,9 +139,9 @@ def hello_monkey():
             f.write(parsed+"\n")
             f.close()
             if (parsed== "spanish"):
-                choice = "Buscar soportador \nmas informacion \nUnsubscribe"
+                choice = "Buscar soportador \nmas informacion \nComplete \nUnsubscribe"
             else:
-                choice = "Find volunteer \nGet info \nUnsubscribe"
+                choice = "Find volunteer \nGet info \nComplete \nUnsubscribe"
             f.close()
             return menu(choice)
         elif parsed == "menu":
@@ -151,9 +151,9 @@ def hello_monkey():
                 next= f.readline()
             langg = f.readline()
             if (langg== "spanish\n"):
-                choice = "Buscar soportador \nmas informacion \nUnsubscribe"
+                choice = "Buscar soportador \nmas informacion \nComplete \nUnsubscribe"
             else:
-                choice = "Find volunteer \nGet info \nUnsubscribe"
+                choice = "Find volunteer \nGet info \nComplete \nUnsubscribe"
             f.close()
             return menu(choice)    
         elif parsed == "findvolunteer" or parsed == "buscarsoportador":
@@ -169,6 +169,10 @@ def hello_monkey():
         elif parsed == "deleteaccount":
             deleteVolunteer(user_number)
             return deleteResp()
+        elif parsed == "complete":
+            deleteClient(user_number)
+            os.remove(filename)
+            return deleteCli() 
         else:
             return
     elif parsed.isdigit() == True:
@@ -230,6 +234,12 @@ def hello_monkey():
         #    print x
 
 @app.route("/deleteResp", methods=['GET', 'POST'])
+def deleteCli():
+	lang = "Thank you for using our service.\n If you need any more volunteer help, text service."
+	resp = twilio.twiml.Response()
+	resp.message(lang)
+	return str(resp) 
+
 def deleteResp():
 	lang = "You have been deleted from the Supporters database.\n Please sign up on the website to rejoin.\n"
 	resp = twilio.twiml.Response()
