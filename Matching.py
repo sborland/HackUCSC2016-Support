@@ -38,6 +38,10 @@ def matchVolunteer(c_name, c_tags, v_name, v_tags):
     # Create a new list of Floats, which represents how compatible
     # each volunteer is with the client. The higher the score, the
     # more compatible.
+
+    if v_name is None:
+        return False
+
     volunteer_score = [0.0] * (len(v_name))
     
     index = 0
