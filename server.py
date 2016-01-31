@@ -99,8 +99,19 @@ def hello_monkey():
                 f.write("null\n")
                 f.close()
                 f_name = True
-                return fname()    
-            return menu()
+                return fname() 
+###################################################################################################                
+            f = open(filename,'r')
+            next = f.readline()
+            while (next != "language"):
+                next= f.readline()
+            langg = f.readline()
+            if (lang== "spanish"):
+                choice = "SPANISHFind volunteer \nGet info \nUnsubscribe"
+            else:
+                choice = "ENGLISHFind volunteer \nGet info \nUnsubscribe"
+            f.close()
+            return menu(choice)
         elif parsed == "english" or parsed == "spanish":
             f = open(filename,'a')
             f.write("language\n")
@@ -212,8 +223,8 @@ def language():
     return str(resp)    
 
 @app.route("/menu", methods=['GET', 'POST'])
-def menu():
-    choices = "Find volunteer \nGet info \nUnsubscribe"
+def menu(choices):
+    #choices = "Find volunteer \nGet info \nUnsubscribe"
     resp = twilio.twiml.Response()
     resp.message(choices)
     return str(resp)    
@@ -287,8 +298,12 @@ def signup():
     f.write("tagArray\n")
     for x in choice_list:
         f.write(x + "\n")
+        #Added city and state as tags ;)
+        f.write( city+ "\n")
+        f.write( state+ "\n")
     f.write("EXIT")    
     f.close()
+    ##### LOCATION FOR ADMIN_FORM ####
     insertVolunteer(filename)
     #os.remove(filename)
     return index()
