@@ -184,22 +184,10 @@ clientObj = client(["title"])
 con = None
 file = None
 
-try:
-    # Reading in the database files.
-    con = lite.connect('service_database.db')
-    cur = con.cursor()
-    con.text_factory = str
-
-    insertClient(filename1)
-    insertVolunteer(filename2)
-
-    # print matchVolunteer(str(cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")),
-    #                      str(cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")),
-    #                      str(cur.execute("SELECT FirstName FROM volunteers WHERE FirstName='volunteer'")),
-    #                      str(cur.execute("SELECT Tags FROM volunteers WHERE FirstName='volunteer'")))
-    cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")
+def clientVolunteerMatch(clientPhone, cur):
+    cur.execute("SELECT FirstName FROM clients WHERE Phone="+clientPhone)
     test1 = ''.join(cur.fetchone())
-    cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")
+    cur.execute("SELECT Tags FROM clients WHERE Phone="+clientPhone)
     test2 = list(cur.fetchone())[0]
     cur.execute("SELECT FirstName FROM volunteers")
     test3 = list(cur.fetchall())
@@ -209,7 +197,32 @@ try:
     for i in test4:
         tmp = list(i)
         test5.append(tmp[0])
-    print list(matchVolunteer(test1, test2, test3, test5))[0]
+    volunteerPhone = list(matchVolunteer(test1, test2, test3, test5))[0]
+    cur.execute("UPDATE clients SET VolunteerID =" + volunteerPhone + " WHERE Phone=" + clientPhone)
+    volunteerID = cur.execute("SELECT VolunteerID FROM clients WHERE Phone="+clientPhone)
+    firstName = cur.execute("SELECT FirstName FROM clients WHERE Phone="+clientPhone)
+    phone = cur.execute("SELECT Phone FROM clients WHERE Phone="+clientPhone)
+    city = cur.execute("SELECT City FROM clients WHERE Phone="+clientPhone)
+    state = cur.execute("SELECT State FROM clients WHERE Phone="+clientPhone)
+    desc = cur.execute("SELECT Description FROM clients WHERE Phone="+clientPhone)
+    clientInfo = [volunteerID, firstName, phone, city, state, desc]
+    return clientInfo
+    # client volunteerID, firstname, phone, city, state, desc
+
+try:
+    # Reading in the database files.
+    con = lite.connect('service_database.db')
+    cur = con.cursor()
+    con.text_factory = str
+
+    # insertClient(filename1)
+    # insertVolunteer(filename2)
+
+    # print matchVolunteer(str(cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")),
+    #                      str(cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")),
+    #                      str(cur.execute("SELECT FirstName FROM volunteers WHERE FirstName='volunteer'")),
+    #                      str(cur.execute("SELECT Tags FROM volunteers WHERE FirstName='volunteer'")))
+
 
     # testing
     # con.commit()
