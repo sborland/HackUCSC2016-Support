@@ -107,12 +107,14 @@ def hello_monkey():
             f.write(parsed+"\n")
             f.close()
             return menu()
+        elif parsed == "menu":
+             return menu()    
         elif parsed == "findvolunteer":
            #language
            lentry = True
            return location()
         elif parsed == "getinfo":
-            return
+            return info()
         else:
             return
     elif parsed.isdigit() == True:
@@ -151,6 +153,12 @@ def hello_monkey():
         #for x in pservice:
         #    print x
        
+@app.route("/about", methods=['GET', 'POST'])
+def about():
+    lang = "Get help from a volunteer by completing a questionnaire. Text menu to return to the menu"
+    resp = twilio.twiml.Response()
+    resp.message(lang)
+    return str(resp) 
 
 @app.route("/desc", methods=['GET', 'POST'])
 def desc():

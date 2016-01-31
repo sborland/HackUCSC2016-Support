@@ -174,7 +174,7 @@ def insertClient(file):
     con.close()
 
 # Command line arguments
-script, filename1, filename2  = argv
+#script, filename1, filename2  = argv
 
 # Initialization of volunteer object.
 volunteerObj = volunteer(["title"])
@@ -190,8 +190,8 @@ try:
     cur = con.cursor()
     con.text_factory = str
 
-    insertClient(filename1)
-    insertVolunteer(filename2)
+    #insertClient(filename1)
+    #insertVolunteer(filename2)
 
     # print matchVolunteer(str(cur.execute("SELECT FirstName FROM clients WHERE FirstName='client'")),
     #                      str(cur.execute("SELECT Tags FROM clients WHERE FirstName='client'")),
@@ -209,7 +209,7 @@ try:
     for i in test4:
         tmp = list(i)
         test5.append(tmp[0])
-    print list(matchVolunteer(test1, test2, test3, test5))[0]
+   # print list(matchVolunteer(test1, test2, test3, test5))[0]
 
     # testing
     # con.commit()
