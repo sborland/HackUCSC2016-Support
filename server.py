@@ -6,7 +6,9 @@ import twilio.twiml
 import sqlite3 as lite
 import sys
 import json
+import os.path
 from account_manager import *
+
  #suppress http request log
 import logging
 log = logging.getLogger('werkzeug')
@@ -22,49 +24,128 @@ client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 plang = ""
 ploc = ""
 pservice = []
+lentry = False
+f_name = False
+l_name = False
+ddesc = False
 
 @app.route("/", methods=['GET', 'POST'])
-def startup():
-    """Respond and greet the caller by name."""
+def hello_monkey():
+    #get info from txt
     msg = request.values.get('Body', None)
     msg = msg.lower().split()
     user_number = request.values.get('From', None)
-
+    user_number = user_number.replace("+","")
+    filename = str("./client/" + user_number)
+    #parse msg
     parsed = ""
-    for word in msg:
+    for word in msg: 
         parsed += word
-    print parsed   
+    
+    global plang
+    global ploc
+    global pservice
+    global lentry
+    global f_name
+    global l_name
+    global ddesc
+    #print(checkCity(parsed))
+    #if(checkCity(parsed) == "true"):
+    #    ploc = parsed
+    #    return service()
 
-    print(checkCity(parsed))
-    if(checkCity(parsed) == "true"):
-        ploc = parsed
+    if lentry == True:
+        f = open(filename,'a')
+        f.write("city\n")
+        f.write(parsed+"\n")
+        f.write("state\n")
+        f.write("california\n")
+        f.close()    
+        lentry = False
+        ddesc = True
+        return desc()
+    elif f_name == True:
+        f = open(filename,'a')
+        f.write("fName\n")
+        f.write(parsed+"\n")
+        f.close()    
+        f_name = False
+        l_name = True
+        return lname()
+    elif l_name == True:
+        f = open(filename,'a')
+        f.write("lName\n")
+        f.write(parsed+"\n")
+        f.close()    
+        l_name = False
+        return language()
+    elif ddesc == True:
+        f = open(filename,'a')
+        f.write("description\n")
+        f.write(parsed+"\n")
+        f.close()    
+        ddesc = False
         return service()
-
-
-    if(parsed.isdigit() == False):
+    
+    elif parsed.isdigit() == False:
         if parsed == "service":
             #check if user is subscribed or not
-            return language()
+            #add contact if not in client list
+            if addContact(user_number) == False:
+                f = open(filename,'a')
+                f.write("phone\n")
+                f.write(user_number+"\n")
+                f.write("volunteerID\n")
+                f.write("null\n")
+                f.close()
+                f_name = True
+                return fname()
+            return menu()
         elif parsed == "unsubscribe":
             #unsubscribe
-            return 	
+            removeContact(user_number)
+            return unsubscribe()
         elif parsed == "english" or parsed == "spanish":
-            plang = parsed
+            f = open(filename,'a')
+            f.write("language\n")
+            f.write(parsed+"\n")
+            f.close()
             return menu()
         elif parsed == "findvolunteer":
-            #language
-            return location()
+           #language
+           lentry = True
+           return location()
         elif parsed == "getinfo":
             return
-    else:
+        else:
+            return
+    elif parsed.isdigit() == True:
         for digit in parsed:
-            print digit
+            #print digit
             if digit == "1":
-                pservice.append("shelter")
+               pservice.append("shelter")
             elif digit == "2":
                 pservice.append("food")
             elif digit == "3":
                 pservice.append("law")
+
+        f = open(filename,'a')
+        f.write("tagArray\n")
+        for e in pservice:
+            f.write(e+"\n")
+        f.write("status\n")
+        f.write("0\n")
+        f.write("EXIT")
+        f.close()    
+        return finished()
+    else:
+    
+        resp = twilio.twiml.Response()
+        resp.message("Invalid choice")
+        return str(resp)
+
+
+
         #call to create user
         
         #print "preferred lang: " + plang
@@ -72,18 +153,44 @@ def startup():
         #print "services : "
         #for x in pservice:
         #    print x
-            else:
-                resp = twilio.twiml.Response()
-                resp.message("Invalid choice")
-                return str(resp)		
-        return finished()
+       
+
+@app.route("/desc", methods=['GET', 'POST'])
+def desc():
+    lang = "Provide a short description about yourself!"
+    resp = twilio.twiml.Response()
+    resp.message(lang)
+    return str(resp) 
+
+
+@app.route("/fname", methods=['GET', 'POST'])
+def fname():
+    lang = "What is your first name?"
+    resp = twilio.twiml.Response()
+    resp.message(lang)
+    return str(resp) 
+
+@app.route("/lname", methods=['GET', 'POST'])
+def lname():
+    lang = "What is your last name?"
+    resp = twilio.twiml.Response()
+    resp.message(lang)
+    return str(resp)    
+
 
 @app.route("/finished", methods=['GET', 'POST'])
 def finished():
     lang = "You have submitted a request for a volunteer!"
     resp = twilio.twiml.Response()
     resp.message(lang)
-    return str(resp)    
+    return str(resp) 
+
+@app.route("/unsubscribe", methods=['GET', 'POST'])
+def unsubscribe():
+    lang = "You have now removed yourself from the subscription list."
+    resp = twilio.twiml.Response()
+    resp.message(lang)
+    return str(resp) 
 
 
 @app.route("/language", methods=['GET', 'POST'])
@@ -99,14 +206,14 @@ def menu():
     resp = twilio.twiml.Response()
     resp.message(choices)
     return str(resp)    
-	
+    
 @app.route("/location", methods=['GET', 'POST'])
 def location():
     loc = "What city do you live in?"
     resp = twilio.twiml.Response()
     resp.message(loc)
     return str(resp)    
-	
+
 @app.route("/service", methods=['GET', 'POST'])
 def service():
     loc = "Which of the following do you need help with? \nText the number corresponding to your choice. \n1- Shelter \n2- Food \n3- Law"
@@ -118,15 +225,15 @@ def service():
 ########html displays ####################
 @app.route('/index')
 def index():
-	return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/creators')
 def creator():
-	return render_template('creator.html')
+    return render_template('creator.html')
 
 @app.route('/info')
 def info():
-	return render_template('info.html')
+    return render_template('info.html')
 
 @app.route('/signuppage')
 def hello(name= 'Leslie'):
