@@ -200,6 +200,8 @@ def clientVolunteerMatch(clientPhone):
     for i in test4:
         tmp = list(i)
         test5.append(tmp[0])
+    if test1 == None or test2 == None or  test3 == None or test5 == None:
+        return False
     volunteerPhone = list(matchVolunteer(test1, test2, test3, test5))[0]
     cur.execute("UPDATE clients SET VolunteerID =" + volunteerPhone + " WHERE Phone=" + clientPhone)
     cur.execute("SELECT VolunteerID FROM clients WHERE Phone="+clientPhone)
@@ -215,7 +217,7 @@ def clientVolunteerMatch(clientPhone):
     cur.execute("SELECT Description FROM clients WHERE Phone="+clientPhone)
     desc = ''.join(cur.fetchone())
     if volunteerID == None or firstName == None or  phone == None or city == None or state == None or desc == None:
-        return []
+        return False
     else:
         clientInfo = [volunteerID, firstName, phone, city, state, desc]
         return clientInfo
