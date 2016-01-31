@@ -217,6 +217,7 @@ def clientVolunteerMatch(clientPhone):
     clientInfo = [volunteerID, firstName, phone, city, state, desc]
     return clientInfo
     # client volunteerID, firstname, phone, city, state, desc
+    # returns phoneNum
     
 def getItem(phone,category,person):
 #phone - phone number
@@ -230,6 +231,17 @@ def getItem(phone,category,person):
     string = ''.join(cur.fetchone())
     return string;
     
+def deleteVolunteer(phone):
+    con = lite.connect('service_database.db')
+    cur = con.cursor()
+    con.text_factory = str
+    cur.execute("DELETE FROM volunteers WHERE Phone="+phone)
+
+def deleteClient(volunteerID):
+    con = lite.connect('service_database.db')
+    cur = con.cursor()
+    con.text_factory = str
+    cur.execute("DELETE FROM clients WHERE VolunteerID="+volunteerID)
 
 try:
     # Reading in the database files.
