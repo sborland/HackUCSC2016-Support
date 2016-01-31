@@ -166,6 +166,9 @@ def hello_monkey():
             else:
             	lang = "Recibe ayuda de un voluntario por completando el cuestionario. Manda un mensaje de texto con la palabra MENU para regresar al menu."
             return about(lang)
+        elif parsed == "deleteaccount":
+            deleteVolunteer(user_number)
+            return deleteResp()
         else:
             return
     elif parsed.isdigit() == True:
@@ -225,7 +228,14 @@ def hello_monkey():
         #print "services : "
         #for x in pservice:
         #    print x
-       
+
+@app.route("/deleteResp", methods=['GET', 'POST'])
+def deleteResp():
+	lang = "You have been deleted from the Supporters database.\n Please sign up on the website to rejoin.\n"
+	resp = twilio.twiml.Response()
+	resp.message(lang)
+	return str(resp) 
+
 @app.route("/about", methods=['GET', 'POST'])
 def about(lang): 
     resp = twilio.twiml.Response()
