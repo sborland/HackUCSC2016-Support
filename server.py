@@ -103,23 +103,39 @@ def hello_monkey():
 ###################################################################################################                
             f = open(filename,'r')
             next = f.readline()
-            while (next != "language"):
+            while (next != "language\n"):
                 next= f.readline()
             langg = f.readline()
-            if (lang== "spanish"):
-                choice = "SPANISHFind volunteer \nGet info \nUnsubscribe"
+            if (langg== "spanish\n"):
+                choice = "SPANISH: Find volunteer \nGet info \nUnsubscribe"
             else:
-                choice = "ENGLISHFind volunteer \nGet info \nUnsubscribe"
+                choice = "ENGLISH: Find volunteer \nGet info \nUnsubscribe"
             f.close()
             return menu(choice)
+        #    
         elif parsed == "english" or parsed == "spanish":
             f = open(filename,'a')
             f.write("language\n")
             f.write(parsed+"\n")
             f.close()
-            return menu()
+            if (parsed== "spanish"):
+                choice = "SPANISH: Find volunteer \nGet info \nUnsubscribe"
+            else:
+                choice = "ENGLISH: Find volunteer \nGet info \nUnsubscribe"
+            f.close()
+            return menu(choice)
         elif parsed == "menu":
-             return menu()    
+            f = open(filename,'r')
+            next = f.readline()
+            while (next != "language\n"):
+                next= f.readline()
+            langg = f.readline()
+            if (langg== "spanish\n"):
+                choice = "SPANISH: Find volunteer \nGet info \nUnsubscribe"
+            else:
+                choice = "ENGLISH: Find volunteer \nGet info \nUnsubscribe"
+            f.close()
+            return menu(choice)    
         elif parsed == "findvolunteer":
            #language
            lentry = True
