@@ -15,10 +15,3 @@ def addContact(potential):
 	print potential
 	return os.path.exists(potential)
 
-def removeContact(client):
-    for contact in contacts:
-        if client == contact:
-            contacts.remove(client)
-            return True
-    return False       
-

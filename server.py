@@ -101,10 +101,6 @@ def hello_monkey():
                 f_name = True
                 return fname()
             return menu()
-        elif parsed == "unsubscribe":
-            #unsubscribe
-            removeContact(user_number)
-            return unsubscribe()
         elif parsed == "english" or parsed == "spanish":
             f = open(filename,'a')
             f.write("language\n")
@@ -137,6 +133,7 @@ def hello_monkey():
         f.write("0\n")
         f.write("EXIT")
         f.close()    
+        insertClient(filename)
         return finished()
     else:
     
@@ -184,14 +181,6 @@ def finished():
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp) 
-
-@app.route("/unsubscribe", methods=['GET', 'POST'])
-def unsubscribe():
-    lang = "You have now removed yourself from the subscription list."
-    resp = twilio.twiml.Response()
-    resp.message(lang)
-    return str(resp) 
-
 
 @app.route("/language", methods=['GET', 'POST'])
 def language():
@@ -279,7 +268,7 @@ def signup():
     f.write("EXIT")    
     f.close()
     insertVolunteer(filename)
-
+    os.remove(filename)
     return index()
 
 if __name__ == "__main__":
