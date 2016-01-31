@@ -200,8 +200,7 @@ def clientVolunteerMatch(clientPhone):
     for i in test4:
         tmp = list(i)
         test5.append(tmp[0])
-    if test1 == "" or test2 == "" or  test3 == "" or test5 == "":
-        print "empty"
+    if matchVolunteer(test1, test2, test3, test5) == False:
         return False
     volunteerPhone = list(matchVolunteer(test1, test2, test3, test5))[0]
     cur.execute("UPDATE clients SET VolunteerID =" + volunteerPhone + " WHERE Phone=" + clientPhone)
