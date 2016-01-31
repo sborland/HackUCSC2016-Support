@@ -90,16 +90,17 @@ def deleteTagDup(Obj):
     return noDupes
 
 def insertVolunteer(file):
-    
+
     con = lite.connect('service_database.db')
     cur = con.cursor()
     con.text_factory = str
     
-    cur.execute("DROP TABLE IF EXISTS volunteers")
-    cur.execute("DROP TABLE IF EXISTS users")
+    #cur.execute("DROP TABLE IF EXISTS volunteers")
+    #cur.execute("DROP TABLE IF EXISTS users")
+    
     # Creating both volunteer and user tables with the elements
-    cur.execute("CREATE TABLE volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
-    cur.execute("CREATE TABLE users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS volunteers(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, Email TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS users(FirstName TEXT, LastName TEXT, City TEXT, State TEXT, Language TEXT, PhoneNum TEXT, VolunteerID TEXT, Description TEXT, Status INTEGER, Tags TEXT)")
     
     f = open(file)
     while True:
