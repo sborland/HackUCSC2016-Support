@@ -36,9 +36,10 @@
 		<br>
 		<br>
 		<br>
+        
 
 		<div class="row features">
-			<div class="medium-4 columns">
+			<div class="medium-4 columns"  style="padding-top:2 rem;">
 				<div class="round-icon">
 					<span class="fi-star"></span>
 				</div>
@@ -73,10 +74,12 @@
 
 		</div>
 
-		<script src="js/vendor/jquery.min.js"></script>
-		<script src="js/vendor/what-input.min.js"></script>
-		<script src="js/foundation.min.js"></script>
-		<script src="js/app.js"></script>
+
+	 <script href= "{{ url_for('static', filename='jquery.min.js') }}"></script>
+      <script href= "{{ url_for('static', filename='what-input.min.js') }}"></script>
+       <script href= "{{ url_for('static', filename='foundation.min.js') }}"></script>
+        <script href= "{{ url_for('static', filename='app.js') }}"></script>
+
 	</body>
 	<br>
 	<br>

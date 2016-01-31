@@ -14,7 +14,7 @@
 		
 		<link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
 
-		<header class="header">
+		<header class="header" style="bottom:6 rem;">
 			<h1 class="main-header"></h1>
 			<ul class="header-subnav">
 				<li>
@@ -32,7 +32,7 @@
 
 		<!-- this adds Foundation Icon Fonts!! -->
 
-		<div class="row">
+		<div class="row"  >
 
 			<div class="medium-3 columns">
 				<div class="profile-card">
@@ -57,7 +57,7 @@
 					<div class="profile-info">
 						<h4 class="subheader">Henry</h4>
 						<p>
-							I'm a Computer Science student at the University of California, Santa Cruz. <br>My hobby is game development.<br> My favorite animal is the tiger.
+							I'm a Computer Science student at the University of California, Santa Cruz. <br> My hobby is game development.<br> My favorite animal is the tiger.
 						</p>
 
 						<p>
@@ -74,11 +74,11 @@
 					<div class="profile-info">
 						<h4 class="subheader">Leslie</h4>
 						<p>
-							O.G. stands for original gangsta.
+							Hello, I'm a Computer Science junior at UCSC! My hobby is weightlifing and I'm a huge lover of corgis!
 						</p>
 
 						<p>
-							<a href="http://zurb.com/patterntap">Patterns</a> | <a href="http://foundation.zurb.com/apps/">Website</a>
+							<a href="https://github.com/huishili">GitHub</a> | <a href="https://www.linkedin.com/in/hui-shi-li-a9717a72">LinkedIn</a>
 						</p>
 
 					</div>
@@ -91,7 +91,7 @@
 					<div class="profile-info">
 						<h4 class="subheader">Karl</h4>
 						<p>
-							I'm a Computer Science student at the University of California, Santa Cruz. <br>I enjoy weightlifting.<br> My favorite animal is the Liger.
+							I'm a Computer Science student at the University of California, Santa Cruz. <br>I enjoy weightlifting.<br> My favorite animal is the liger.
 						</p>
 
 						<p>
@@ -104,11 +104,12 @@
 
 		</div>
 
-		<script src="js/vendor/jquery.min.js"></script>
-		<script src="js/vendor/what-input.min.js"></script>
-		<script src="js/foundation.min.js"></script>
-		<script src="js/app.js"></script>
-	</body>
+	 <script href= "{{ url_for('static', filename='jquery.min.js') }}"></script>
+      <script href= "{{ url_for('static', filename='what-input.min.js') }}"></script>
+       <script href= "{{ url_for('static', filename='foundation.min.js') }}"></script>
+        <script href= "{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+
 
 <br><br><br>
 	<!-- Footer -->

@@ -4,9 +4,10 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>People4People | Hello</title>
+		<title>Support | Hello</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='foundation.css') }}">
+
 
 
 	</head>
@@ -27,9 +28,10 @@
 					<a href="/info">Information</a>
 				</li>
 			</ul>
+
 		</header>
-       
-		<br />
+             
+        
 
 		<div class="row">
 			<div class="small-6 small-centered columns">
@@ -37,23 +39,23 @@
 				<div class="service">
 					<div class="service-icon-box">
 						<img src="static/logo.png" alt="" class="service-icon">
-					</div>
-					<h4 class="service-heading">Volunteer</h4>
+                        </div>
+					<h4 class="service-heading"> <img src="static/title.png" alt="" height="150" width="200"> </h4>
 					<p class="service-description">
-						Use your talents and resources to help a person in need!
+						<b>Someone out there needs the <font color="red"> support </font> only you can give. </b>
 						<br>
-						<a href="/signuppage" class="medium secondary button">Click to Sign Up</a>
+						<a href="/signuppage" class="button alert">Click Here to Reach Them</a>
 					</p>
 				</div>
 
 			</div>
 		</div>
 
-		<script src="js/vendor/jquery.min.js"></script>
-		<script src="js/vendor/what-input.min.js"></script>
-		<script src="js/foundation.min.js"></script>
-		<script src="js/app.js"></script>
-	</body>
+	 <script href= "{{ url_for('static', filename='jquery.min.js') }}"></script>
+      <script href= "{{ url_for('static', filename='what-input.min.js') }}"></script>
+       <script href= "{{ url_for('static', filename='foundation.min.js') }}"></script>
+        <script href= "{{ url_for('static', filename='app.js') }}"></script>
+  </body>
 
 <br><br><br>
 	<footer class="footer">
