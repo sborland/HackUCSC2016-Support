@@ -242,11 +242,11 @@ def deleteVolunteer(phone):
     con.text_factory = str
     cur.execute("DELETE FROM volunteers WHERE Phone="+phone)
 
-def deleteClient(volunteerID):
+def deleteClient(phone):
     con = lite.connect('service_database.db')
     cur = con.cursor()
     con.text_factory = str
-    cur.execute("DELETE FROM clients WHERE VolunteerID="+volunteerID)
+    cur.execute("DELETE FROM clients WHERE Phone="+phone)
 
 try:
     # Reading in the database files.
