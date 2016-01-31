@@ -63,7 +63,17 @@ def hello_monkey():
         f.close()    
         lentry = False
         ddesc = True
-        return desc()
+        f = open(filename,'r')
+        next = f.readline()
+        while (next != "language\n"):
+            next= f.readline()
+        langg = f.readline()
+        if (langg== "spanish\n"):
+            choice = "Escribe una descripcion contra de su problema"
+        else:
+            choice = "Write a short description describing your problem"
+        f.close()
+        return desc(choice)
     elif f_name == True:
         f = open(filename,'a')
         f.write("fName\n")
@@ -85,7 +95,17 @@ def hello_monkey():
         f.write(parsed+"\n")
         f.close()    
         ddesc = False
-        return service()
+        f = open(filename,'r')
+        next = f.readline()
+        while (next != "language\n"):
+            next= f.readline()
+        langg = f.readline()
+        if (langg== "spanish\n"):
+            choice = "En cuales area necesitas ayuda? \nMande un mensaje de texto que corresponde con tu opcion.\n 1- Necesito asilo \n2-Necesito comida\n 3-Mis derechos han sido violados\n 4-Necesito transportacion\n 5-Necesito ayuda emocional\n 6-Otro tipo de ayuda\n"
+        else:
+            choice = "Which of the following do you need help with? \nText the number corresponding to your choice. \n1- Shelter \n2- Food \n3- Law\n 4- transportation\n 5- Emotional Support \n6- Other support\n"
+        f.close()
+        return service(choice)
     
     elif parsed.isdigit() == False:
         if parsed == "service":
@@ -107,9 +127,9 @@ def hello_monkey():
                 next= f.readline()
             langg = f.readline()
             if (langg== "spanish\n"):
-                choice = "SPANISH: Find volunteer \nGet info \nUnsubscribe"
+                choice = "Buscar soportador \nmas informacion \nUnsubscribe"
             else:
-                choice = "ENGLISH: Find volunteer \nGet info \nUnsubscribe"
+                choice = "Find volunteer \nGet info \nUnsubscribe"
             f.close()
             return menu(choice)
         #    
@@ -119,9 +139,9 @@ def hello_monkey():
             f.write(parsed+"\n")
             f.close()
             if (parsed== "spanish"):
-                choice = "SPANISH: Find volunteer \nGet info \nUnsubscribe"
+                choice = "Buscar soportador \nmas informacion \nUnsubscribe"
             else:
-                choice = "ENGLISH: Find volunteer \nGet info \nUnsubscribe"
+                choice = "Find volunteer \nGet info \nUnsubscribe"
             f.close()
             return menu(choice)
         elif parsed == "menu":
@@ -131,17 +151,21 @@ def hello_monkey():
                 next= f.readline()
             langg = f.readline()
             if (langg== "spanish\n"):
-                choice = "SPANISH: Find volunteer \nGet info \nUnsubscribe"
+                choice = "Buscar soportador \nmas informacion \nUnsubscribe"
             else:
-                choice = "ENGLISH: Find volunteer \nGet info \nUnsubscribe"
+                choice = "Find volunteer \nGet info \nUnsubscribe"
             f.close()
             return menu(choice)    
-        elif parsed == "findvolunteer":
+        elif parsed == "findvolunteer" or parsed == "buscarsoportador":
            #language
            lentry = True
-           return location()
-        elif parsed == "getinfo":
-            return about()
+           return location(parsed)
+        elif parsed == "getinfo" or parsed == "masinformacion":
+            if parsed == "getinfo":
+        	    lang = "Get help from a volunteer by completing the questionnaire. Text menu to return to the menu"
+            else:
+            	lang = "Recibe ayuda de un voluntario por completando el cuestionario. Manda un mensaje de texto con la palabra MENU para regresar al menu."
+            return about(lang)
         else:
             return
     elif parsed.isdigit() == True:
@@ -153,7 +177,12 @@ def hello_monkey():
                 pservice.append("food")
             elif digit == "3":
                 pservice.append("law")
-
+            elif digit == "4":
+                pservice.append("transport")
+            elif digit == "5":
+                pservice.append("talk")
+            elif digit == "6":
+                pservice.append("other")
         f = open(filename,'a')
         f.write("tagArray\n")
         for e in pservice:
@@ -164,19 +193,22 @@ def hello_monkey():
         f.close()    
         insertClient(filename)
 
-        match = clientVolunteerMatch(user_number)
-        for i in match:
-        	print i
-        message = client.messages.create(
-	    	body= "You will be supporting: " + match[1] + "\n"
-	    	"Phone: " + match[2] + "\n" +
-	    	"City: " + match[3] + "\n" +
-	    	"State: " + match[4] + "\n" +
-	    	"Description: " + match[5] + "\n",
-	    	to= match[0],
-			from_= "16507298318",
-		)
 
+        match = clientVolunteerMatch(user_number)
+        if match == False:
+        	print "No match found"
+        else:
+            for i in match:
+        	    print i
+            message = client.messages.create(
+	    	  body= "You will be supporting: " + match[1] + "\n"
+	    	    "Phone: " + match[2] + "\n" +
+	    	   "City: " + match[3] + "\n" +
+	    	    "State: " + match[4] + "\n" +
+	         	"Description: " + match[5] + "\n",
+	        	to= match[0],
+			    from_= "16507298318",
+		    )
         return finished()
     else:
     
@@ -195,15 +227,13 @@ def hello_monkey():
         #    print x
        
 @app.route("/about", methods=['GET', 'POST'])
-def about():
-    lang = "Get help from a volunteer by completing a questionnaire. Text menu to return to the menu"
+def about(lang): 
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp) 
 
 @app.route("/desc", methods=['GET', 'POST'])
-def desc():
-    lang = "Provide a short description about yourself!"
+def desc(lang):
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp) 
@@ -211,14 +241,14 @@ def desc():
 
 @app.route("/fname", methods=['GET', 'POST'])
 def fname():
-    lang = "What is your first name?"
+    lang = "What is your first name? \nNombre?"
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp) 
 
 @app.route("/lname", methods=['GET', 'POST'])
 def lname():
-    lang = "What is your last name?"
+    lang = "What is your last name?\nApellido?"
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp)    
@@ -226,14 +256,14 @@ def lname():
 
 @app.route("/finished", methods=['GET', 'POST'])
 def finished():
-    lang = "You have submitted a request for a volunteer!"
+    lang = "You have submitted a request for a volunteer!\nHas entregado una aplicacion para un voluntario!"
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp) 
 
 @app.route("/language", methods=['GET', 'POST'])
 def language():
-    lang = "What is your primary language?"
+    lang = "What is your primary language? \n Que es tu lenguaje primario?"
     resp = twilio.twiml.Response()
     resp.message(lang)
     return str(resp)    
@@ -246,17 +276,19 @@ def menu(choices):
     return str(resp)    
     
 @app.route("/location", methods=['GET', 'POST'])
-def location():
-    loc = "What city do you live in?"
+def location(parsed):
+    if parsed == "findvolunteer":
+        loc = "What city do you live in?"
+    else:
+	    loc = "En cual ciudad vives?"
     resp = twilio.twiml.Response()
     resp.message(loc)
     return str(resp)    
 
 @app.route("/service", methods=['GET', 'POST'])
-def service():
-    loc = "Which of the following do you need help with? \nText the number corresponding to your choice. \n1- Shelter \n2- Food \n3- Law"
+def service(lang):
     resp = twilio.twiml.Response()
-    resp.message(loc)
+    resp.message(lang)
     return str(resp)    
     
 
